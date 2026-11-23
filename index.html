@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OK BESS - Ojol Keresidenan Besuki</title>
+  <meta name="description" content="OK BESS (Ojol Keresidenan Besuki) - Ojek online berbasis WhatsApp: ojek, kirim paket, titip makan, dan titip belanja di Besuki Raya." />
+  <link rel="icon" href="logookbess.jpeg" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            emerald: { DEFAULT: '#10B981', 600: '#059669', 700: '#047857', 50: '#ECFDF5', 100: '#D1FAE5' },
+            gold: { DEFAULT: '#F59E0B', 600: '#D97706', 50: '#FFFBEB', 100: '#FEF3C7' },
+            soft: '#F3F4F6',
+            wa: { DEFAULT: '#25D366', dark: '#128C7E', deep: '#075E54', bg: '#ECE5DD' }
+          },
+          fontFamily: { sans: ['Poppins', 'Inter', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    @keyframes floaty { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-14px) } }
+    .floaty { animation: floaty 4s ease-in-out infinite; }
+    @keyframes pop { 0% { opacity: 0; transform: translateY(10px) scale(.95) } 100% { opacity: 1; transform: none } }
+    .bubble { opacity: 0; animation: pop .5s ease forwards; }
+    @keyframes pulseRing { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,.6) } 100% { box-shadow: 0 0 0 18px rgba(37,211,102,0) } }
+    .pulse-ring { animation: pulseRing 2s infinite; }
+    @keyframes blink { 0%,80%,100% { opacity: .2 } 40% { opacity: 1 } }
+    .typing span { animation: blink 1.2s infinite; }
+    .typing span:nth-child(2) { animation-delay: .2s } .typing span:nth-child(3) { animation-delay: .4s }
+    .reveal { opacity: 0; transform: translateY(24px); transition: all .7s ease; }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+    .dots { background-image: radial-gradient(#10B98133 1.5px, transparent 1.5px); background-size: 18px 18px; }
+    .wa-pattern { background-color: #ECE5DD; background-image: radial-gradient(#d9d0c3 1.2px, transparent 1.2px); background-size: 16px 16px; }
+    .bubble-in::before { content:''; position:absolute; left:-6px; top:0; border-width:0 8px 8px 0; border-style:solid; border-color:transparent #fff transparent transparent; }
+    .bubble-out::before { content:''; position:absolute; right:-6px; top:0; border-width:0 0 8px 8px; border-style:solid; border-color:transparent transparent transparent #DCF8C6; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: none } }
+    .fade-in { animation: fadeIn .35s ease; }
+    @keyframes shine { 0% { background-position: 0% 50% } 100% { background-position: 200% 50% } }
+    .text-shine { background: linear-gradient(90deg,#059669,#10B981,#F59E0B,#10B981,#059669); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 6s linear infinite; }
+    @keyframes ride { 0% { transform: translateX(-10px) } 50% { transform: translateX(10px) } 100% { transform: translateX(-10px) } }
+    .ride { animation: ride 3s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { .floaty, .pulse-ring, .fade-in, .text-shine, .ride { animation: none } .reveal { opacity: 1; transform: none; transition: none } }
+  </style>
+</head>
+
+<body class="font-sans text-gray-700 bg-white antialiased">
+
+  <!-- 1. NAVBAR -->
+  <header id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#beranda" class="flex items-center gap-2.5">
+        <img src="logookbess.jpeg" alt="Logo OK BESS" class="w-11 h-11 rounded-full object-contain bg-white shadow-lg shadow-emerald/30" />
+        <span class="leading-tight">
+          <span class="block font-extrabold text-xl text-emerald-700">OK <span class="text-gold">BESS</span></span>
+          <span class="block text-[10px] text-gray-500 -mt-0.5">Ojol Keresidenan Besuki</span>
+        </span>
+      </a>
+
+      <ul class="hidden md:flex items-center gap-7 text-sm font-medium">
+        <li><a href="#beranda" class="hover:text-emerald transition">Beranda</a></li>
+        <li><a href="#layanan" class="hover:text-emerald transition">Layanan</a></li>
+        <li><a href="#katalog" class="hover:text-emerald transition">Katalog UMKM</a></li>
+        <li><a href="#tarif" class="hover:text-emerald transition">Tarif</a></li>
+        <li><a href="#mitra" class="hover:text-emerald transition">Gabung Mitra</a></li>
+        <li><a href="#kontak" class="hover:text-emerald transition">Kontak</a></li>
+      </ul>
+
+      <a href="#kontak" class="hidden md:inline-flex items-center gap-2 bg-gold hover:bg-gold-600 text-white text-sm font-semibold px-5 py-2.5 rounded-full shadow-md hover:shadow-lg hover:-translate-y-0.5 transition">
+        <i class="fa-brands fa-whatsapp text-base"></i> Hubungi Kami
+      </a>
+
+      <button id="menuBtn" aria-label="Buka menu" class="md:hidden w-10 h-10 rounded-lg flex items-center justify-center text-emerald-700 hover:bg-emerald-50">
+        <i id="menuIcon" class="fa-solid fa-bars text-xl"></i>
+      </button>
+    </nav>
+
+    <div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg">
+      <ul class="px-4 py-4 space-y-1 text-sm font-medium">
+        <li><a href="#beranda" class="mobile-link block px-3 py-2.5 rounded-lg hover:bg-emerald-50">Beranda</a></li>
+        <li><a href="#layanan" class="mobile-link block px-3 py-2.5 rounded-lg hover:bg-emerald-50">Layanan</a></li>
+        <li><a href="#katalog" class="mobile-link block px-3 py-2.5 rounded-lg hover:bg-emerald-50">Katalog UMKM</a></li>
+         <li><a href="#tarif" class="mobile-link block px-3 py-2.5 rounded-lg hover:bg-emerald-50">Tarif &amp; Ongkir</a></li>
+        <li><a href="#mitra" class="mobile-link block px-3 py-2.5 rounded-lg hover:bg-emerald-50">Gabung Mitra</a></li>
+        <li><a href="#kontak" class="mobile-link block px-3 py-2.5 rounded-lg hover:bg-emerald-50">Kontak</a></li>
+        <li class="pt-2">
+          <a href="#kontak" class="mobile-link flex items-center justify-center gap-2 bg-gold text-white font-semibold px-5 py-3 rounded-full">
+            <i class="fa-brands fa-whatsapp"></i> Hubungi Kami
+          </a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- 2. HERO -->
+  <section id="beranda" class="relative pt-28 pb-20 lg:pt-36 lg:pb-28 overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-gold-50">
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-emerald/20 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-gold/20 rounded-full blur-3xl"></div>
+    <div class="absolute inset-0 dots opacity-60"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-14 items-center">
+      <div class="text-center lg:text-left reveal">
+        <span class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-700 text-xs font-semibold px-4 py-1.5 rounded-full mb-5">
+          <i class="fa-brands fa-whatsapp"></i> Ojol Berbasis WhatsApp - Tanpa Ribet
+        </span>
+
+        <h1 class="font-extrabold leading-[1.05] text-gray-900">
+          <span class="block text-5xl sm:text-6xl lg:text-7xl tracking-tight">OK <span class="text-gold">BESS</span></span>
+          <span class="block mt-2 text-2xl sm:text-3xl lg:text-4xl text-shine">Ojol Keresidenan Besuki</span>
+        </h1>
+
+                <div class="mt-6 inline-flex items-center gap-3.5 bg-white/80 backdrop-blur border border-emerald/20 rounded-2xl px-4 py-3 shadow-sm text-left max-w-xl">
+          <span class="shrink-0 w-11 h-11 rounded-xl bg-gradient-to-br from-emerald to-emerald-700 text-white flex items-center justify-center text-xl ride"><i class="fa-solid fa-motorcycle"></i></span>
+          <p class="text-sm sm:text-base font-bold text-emerald-700 leading-snug">
+            Solusi Transportasi &amp; Antar Layanan Lokal Besuki Raya
+          </p>
+        </div>
+
+        <p class="mt-5 text-gray-600 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
+          Lewat website ini, Anda bisa melihat layanan dan katalog toko &amp; warung UMKM Besuki, lalu pesan langsung lewat WhatsApp.
+          Ojek, kirim paket, titip makan, hingga titip belanja - <span class="font-semibold text-gray-800">Harga bersahabat, Layanan bersahaja.</span>
+        </p>
+        
+        <div class="mt-5 flex flex-wrap gap-2 justify-center lg:justify-start text-xs font-semibold">
+          <span class="inline-flex items-center gap-1.5 bg-white border border-gray-100 shadow-sm rounded-full px-3 py-1.5 text-emerald-700"><i class="fa-solid fa-motorcycle"></i> Ojek</span>
+          <span class="inline-flex items-center gap-1.5 bg-white border border-gray-100 shadow-sm rounded-full px-3 py-1.5 text-gold-600"><i class="fa-solid fa-box-open"></i> Kirim Paket</span>
+          <span class="inline-flex items-center gap-1.5 bg-white border border-gray-100 shadow-sm rounded-full px-3 py-1.5 text-emerald-700"><i class="fa-solid fa-bowl-food"></i> Titip Makan</span>
+          <span class="inline-flex items-center gap-1.5 bg-white border border-gray-100 shadow-sm rounded-full px-3 py-1.5 text-gold-600"><i class="fa-solid fa-basket-shopping"></i> Titip Belanja</span>
+        </div>
+
+        <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+          <a href="#" data-wa="Halo OK BESS, saya mau pesan layanan." target="_blank" rel="noopener" class="wa-link inline-flex items-center justify-center gap-2 bg-wa hover:bg-wa-dark text-white font-semibold px-8 py-3.5 rounded-full shadow-lg shadow-wa/30 hover:shadow-xl hover:-translate-y-1 transition">
+            <i class="fa-brands fa-whatsapp text-xl"></i> Pesan Sekarang
+          </a>
+          <a href="#mitra" data-open-tab="merchant" class="inline-flex items-center justify-center gap-2 bg-white hover:bg-gold hover:text-white text-gold-600 border-2 border-gold font-semibold px-8 py-3.5 rounded-full hover:-translate-y-1 transition">
+            <i class="fa-solid fa-store"></i> Daftar Mitra Merchant UMKM
+          </a>
+        </div>
+
+        <div class="mt-8 flex items-center justify-center lg:justify-start gap-3 text-sm text-gray-500">
+          <div class="text-gold"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+          <span><b class="text-gray-800">4,8/5</b> dari pelanggan Besuki Raya</span>
+        </div>
+      </div>
+
+      <div class="relative flex justify-center reveal">
+        <div class="floaty relative w-64 sm:w-72">
+          <div class="rounded-[2.5rem] bg-gray-900 p-3 shadow-2xl shadow-emerald/40">
+            <div class="rounded-[2rem] overflow-hidden h-[480px] flex flex-col bg-wa-bg">
+              <div class="bg-wa-deep text-white px-4 pt-6 pb-3 flex items-center gap-3">
+                <i class="fa-solid fa-arrow-left text-sm"></i>
+                <img src="logookbess.jpeg" alt="Logo OK BESS" class="w-11 h-11 rounded-full object-contain bg-white shadow-lg shadow-emerald/30" />
+                <div class="leading-tight flex-1">
+                  <p class="text-sm font-semibold">ADMIN OK BESS <i class="fa-solid fa-circle-check text-wa text-[10px]"></i></p>
+                  <p class="text-[10px] text-white/70">online</p>
+                </div>
+                <i class="fa-solid fa-phone text-sm"></i>
+              </div>
+              <div class="wa-pattern flex-1 px-3 py-4 space-y-3 text-[11px] overflow-hidden">
+                <div class="bubble relative bubble-out ml-auto max-w-[80%] bg-[#DCF8C6] rounded-lg rounded-tr-none px-3 py-2 shadow-sm" style="animation-delay:.3s">
+                  Halo kak, mau <b>pesan makan</b> di geprekin antar ke Rumah yaa
+                  <span class="block text-right text-[9px] text-gray-500 mt-0.5">09.41 <i class="fa-solid fa-check-double text-sky-500"></i></span>
+                </div>
+                <div class="bubble relative bubble-in max-w-[80%] bg-white rounded-lg rounded-tl-none px-3 py-2 shadow-sm" style="animation-delay:1.1s">
+                  Siap kak! <b>Pesanannya</b> kami prosess 🏍️
+                  <span class="block text-right text-[9px] text-gray-500 mt-0.5">09.41</span>
+                </div>
+                <div class="bubble relative bubble-in max-w-[80%] bg-white rounded-lg rounded-tl-none px-3 py-2 shadow-sm" style="animation-delay:1.9s">
+                  Kirim alamat tujuannya dan ancer-ancernya kak
+                  <span class="block text-right text-[9px] text-gray-500 mt-0.5">09.42</span>
+                </div>
+                <div class="bubble relative bubble-out ml-auto max-w-[80%] bg-[#DCF8C6] rounded-lg rounded-tr-none px-3 py-2 shadow-sm" style="animation-delay:2.7s">
+                  Siap kak, alamatnya di Jl. Jokotole paddeg besuki kak. Ancer-ancer: Masuk gg khidoro rumah pertama sebelah kanan
+                  <span class="block text-right text-[9px] text-gray-500 mt-0.5">09.42 <i class="fa-solid fa-check-double text-sky-500"></i></span>
+                </div>
+                <div class="bubble relative bubble-in max-w-[80%] bg-white rounded-lg rounded-tl-none px-3 py-2 shadow-sm" style="animation-delay:1.9s">
+                  Siap kak, jasa 7k nanti saya totalin yaa kak.
+                  <span class="block text-right text-[9px] text-gray-500 mt-0.5">09.43</span>
+                </div>
+                <div class="bubble relative bubble-in w-14 bg-white rounded-lg rounded-tl-none px-3 py-2 shadow-sm typing" style="animation-delay:3.3s">
+                  <span class="inline-block w-1.5 h-1.5 rounded-full bg-gray-500"></span>
+                  <span class="inline-block w-1.5 h-1.5 rounded-full bg-gray-500"></span>
+                  <span class="inline-block w-1.5 h-1.5 rounded-full bg-gray-500"></span>
+                </div>
+              </div>
+              <div class="bg-wa-bg px-2 py-2 flex items-center gap-2">
+                <div class="flex-1 bg-white rounded-full px-3 py-2 text-[11px] text-gray-400"><i class="fa-regular fa-face-smile mr-1"></i> Ketik pesan</div>
+                <span class="w-9 h-9 rounded-full bg-wa-dark text-white flex items-center justify-center"><i class="fa-solid fa-paper-plane text-xs"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="absolute -left-8 top-24 bg-white rounded-2xl shadow-xl px-3 py-2 flex items-center gap-2 text-xs">
+            <span class="w-8 h-8 rounded-full bg-gold-100 text-gold flex items-center justify-center"><i class="fa-solid fa-bolt"></i></span>
+            <span><b class="block text-gray-800">Cepat</b>Tanpa ribet</span>
+          </div>
+          <div class="absolute -right-6 bottom-32 bg-white rounded-2xl shadow-xl px-3 py-2 flex items-center gap-2 text-xs">
+            <span class="w-8 h-8 rounded-full bg-emerald-100 text-emerald flex items-center justify-center"><i class="fa-solid fa-shield-heart"></i></span>
+            <span><b class="block text-gray-800">Aman</b>Driver terverifikasi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. STATS -->
+  <section class="relative -mt-10 z-10">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 grid grid-cols-3 divide-x divide-gray-100">
+        <div class="p-3 sm:p-8 text-center">
+          <div class="w-10 h-10 sm:w-14 sm:h-14 mx-auto rounded-xl sm:rounded-2xl bg-emerald-100 text-emerald flex items-center justify-center text-lg sm:text-2xl mb-2 sm:mb-3"><i class="fa-solid fa-motorcycle"></i></div>
+          <p class="text-xl sm:text-4xl font-extrabold text-gray-900"><span class="counter" data-target="5">0</span>+</p>
+          <p class="mt-0.5 sm:mt-1 text-[11px] sm:text-sm text-gray-500 leading-tight">Driver Aktif</p>
+        </div>
+        <div class="p-3 sm:p-8 text-center">
+          <div class="w-10 h-10 sm:w-14 sm:h-14 mx-auto rounded-xl sm:rounded-2xl bg-gold-100 text-gold flex items-center justify-center text-lg sm:text-2xl mb-2 sm:mb-3"><i class="fa-solid fa-store"></i></div>
+          <p class="text-xl sm:text-4xl font-extrabold text-gray-900"><span class="counter" data-target="99">0</span>±</p>
+          <p class="mt-0.5 sm:mt-1 text-[11px] sm:text-sm text-gray-500 leading-tight">Merchant UMKM</p>
+        </div>
+        <div class="p-3 sm:p-8 text-center">
+          <div class="w-10 h-10 sm:w-14 sm:h-14 mx-auto rounded-xl sm:rounded-2xl bg-emerald-100 text-emerald flex items-center justify-center text-lg sm:text-2xl mb-2 sm:mb-3"><i class="fa-solid fa-users"></i></div>
+          <p class="text-xl sm:text-4xl font-extrabold text-gray-900"><span class="counter" data-target="1100">0</span>+</p>
+          <p class="mt-0.5 sm:mt-1 text-[11px] sm:text-sm text-gray-500 leading-tight">Pelanggan Aktif</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. LAYANAN (2 kotak ke samping, 2 baris ke bawah) -->
+  <section id="layanan" class="py-20 lg:py-28">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto reveal">
+        <span class="text-gold font-semibold text-sm tracking-widest uppercase">Layanan Kami</span>
+        <h2 class="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900">Pesan Lewat WhatsApp, Beres!</h2>
+        <p class="mt-3 text-gray-600">Pilih layanan, klik tombol, dan chat langsung dengan admin OK BESS.</p>
+      </div>
+
+      <div class="mt-10 sm:mt-14 grid grid-cols-2 gap-3 sm:gap-6">
+        <article class="group reveal bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-gray-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-emerald transition duration-300">
+          <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-emerald-100 text-emerald group-hover:bg-emerald group-hover:text-white flex items-center justify-center text-xl sm:text-3xl transition"><i class="fa-solid fa-motorcycle"></i></div>
+          <h3 class="mt-3 sm:mt-5 text-base sm:text-xl font-bold text-gray-900">Ojek</h3>
+          <p class="mt-1 sm:mt-3 text-xs sm:text-sm text-gray-600">Pesan perjalanan dengan mudah.</p>
+          <a href="#" data-wa="Halo OK BESS, saya mau pesan *OJEK*. Jemput di: ... Tujuan: ..." target="_blank" rel="noopener" class="wa-link mt-3 sm:mt-5 inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-semibold text-emerald group-hover:gap-3 transition-all">
+            <i class="fa-brands fa-whatsapp"></i> Pesan <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </article>
+
+        <article class="group reveal bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-gray-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-gold transition duration-300">
+          <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gold-100 text-gold group-hover:bg-gold group-hover:text-white flex items-center justify-center text-xl sm:text-3xl transition"><i class="fa-solid fa-box-open"></i></div>
+          <h3 class="mt-3 sm:mt-5 text-base sm:text-xl font-bold text-gray-900">Kirim Paket</h3>
+          <p class="mt-1 sm:mt-3 text-xs sm:text-sm text-gray-600">Kirim paket cepat dan aman.</p>
+          <a href="#" data-wa="Halo OK BESS, saya mau *KIRIM PAKET*. Ambil di: ... Antar ke: ... Isi paket: ..." target="_blank" rel="noopener" class="wa-link mt-3 sm:mt-5 inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-semibold text-gold-600 group-hover:gap-3 transition-all">
+            <i class="fa-brands fa-whatsapp"></i> Pesan <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </article>
+
+        <article class="group reveal bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-gray-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-emerald transition duration-300">
+          <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-emerald-100 text-emerald group-hover:bg-emerald group-hover:text-white flex items-center justify-center text-xl sm:text-3xl transition"><i class="fa-solid fa-bowl-food"></i></div>
+          <h3 class="mt-3 sm:mt-5 text-base sm:text-xl font-bold text-gray-900">Titip Makan</h3>
+          <p class="mt-1 sm:mt-3 text-xs sm:text-sm text-gray-600">Pilih warung, lalu pesan makanan favoritmu.</p>
+          <a href="#katalog" class="mt-3 sm:mt-5 inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-semibold text-emerald group-hover:gap-3 transition-all">
+            <i class="fa-solid fa-utensils"></i> Lihat Warung <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </article>
+
+        <article class="group reveal bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-7 border border-gray-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-gold transition duration-300">
+          <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-gold-100 text-gold group-hover:bg-gold group-hover:text-white flex items-center justify-center text-xl sm:text-3xl transition"><i class="fa-solid fa-basket-shopping"></i></div>
+          <h3 class="mt-3 sm:mt-5 text-base sm:text-xl font-bold text-gray-900">Titip Belanja</h3>
+          <p class="mt-1 sm:mt-3 text-xs sm:text-sm text-gray-600">Belanja kebutuhan sehari-hari.</p>
+          <a href="#" data-wa="Halo OK BESS, saya mau *TITIP BELANJA*. Daftar belanja: ... Antar ke: ..." target="_blank" rel="noopener" class="wa-link mt-3 sm:mt-5 inline-flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-semibold text-gold-600 group-hover:gap-3 transition-all">
+            <i class="fa-brands fa-whatsapp"></i> Pesan <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. KATALOG TOKO & WARUNG UMKM -->
+  <section id="katalog" class="py-20 lg:py-28 bg-soft scroll-mt-16">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+
+      <div id="storeView">
+        <div class="text-center max-w-3xl mx-auto reveal px-1">
+          <span class="text-emerald font-semibold text-sm tracking-widest uppercase">Toko &amp; Warung UMKM</span>
+          <h2 class="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900">Toko &amp; Warung UMKM Besuki yang Bekerjasama dengan OK BESS</h2>
+          <p class="mt-3 text-gray-600">Pilih toko atau warung untuk melihat semua produk yang dijual, lalu titip makan via WhatsApp.</p>
+        </div>
+
+        <div class="mt-10 max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-4 sm:p-5">
+          <div class="relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+            <input id="searchInput" type="search" placeholder="Cari nama toko/warung atau nama produk... (cth: Seblak, Dimsum, Bakso)" class="w-full rounded-xl border border-gray-200 pl-11 pr-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald focus:border-emerald" />
+          </div>
+
+          <div class="mt-4 flex flex-col sm:flex-row sm:items-center gap-3">
+            <div class="relative flex-1">
+              <i class="fa-solid fa-location-dot absolute left-4 top-1/2 -translate-y-1/2 text-emerald"></i>
+              <select id="kecSelect" class="w-full appearance-none rounded-xl border border-gray-200 pl-11 pr-10 py-3 text-sm font-medium bg-white focus:outline-none focus:ring-2 focus:ring-emerald focus:border-emerald">
+                <option value="Semua">Semua Kecamatan di Situbondo</option>
+              </select>
+              <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs pointer-events-none"></i>
+            </div>
+            <label class="inline-flex items-center gap-2 text-xs font-semibold text-gray-600 cursor-pointer select-none">
+              <input id="readyOnly" type="checkbox" class="accent-emerald w-4 h-4" /> Buka sekarang saja
+            </label>
+          </div>
+
+          <div class="mt-4">
+            <p class="text-xs font-semibold text-gray-500 mb-2"><i class="fa-solid fa-pepper-hot text-gold mr-1"></i> Pilih rasa</p>
+            <div id="rasaBar" class="flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+
+        <p id="resultCount" class="mt-6 text-center text-sm text-gray-500"></p>
+        <!-- 3 kotak ke samping, lanjut ke bawah -->
+        <div id="storeGrid" class="mt-6 grid grid-cols-3 gap-2 sm:gap-5 lg:gap-6"></div>
+        <div id="storeMoreWrap" class="hidden mt-8 text-center"><button type="button" id="storeMore" class="inline-flex items-center gap-2 bg-white border-2 border-emerald text-emerald-700 hover:bg-emerald hover:text-white font-semibold text-sm px-8 py-3 rounded-full shadow-sm transition">Selengkapnya <span class="font-normal opacity-80">(<span id="storeMoreCount">0</span> lagi)</span> <i class="fa-solid fa-chevron-down text-xs"></i></button></div>
+
+        <div id="emptyState" class="hidden mt-6 max-w-md mx-auto text-center bg-white rounded-3xl p-10 shadow-sm">
+          <div class="w-16 h-16 mx-auto rounded-full bg-gold-100 text-gold flex items-center justify-center text-2xl"><i class="fa-solid fa-magnifying-glass"></i></div>
+          <h3 class="mt-4 font-bold text-gray-900">Toko atau warung tidak ditemukan</h3>
+          <p class="mt-1 text-sm text-gray-500">Coba kata kunci, kecamatan, atau rasa lain - atau titip makan langsung lewat WhatsApp, kami carikan!</p>
+          <a href="#" data-wa="Halo OK BESS, saya mau *TITIP MAKAN* tapi tidak ketemu di katalog. Saya cari: ..." target="_blank" rel="noopener" class="wa-link mt-5 inline-flex items-center gap-2 bg-wa hover:bg-wa-dark text-white text-sm font-semibold px-6 py-2.5 rounded-full transition">
+            <i class="fa-brands fa-whatsapp"></i> Tanya Admin
+          </a>
+        </div>
+
+        <p class="mt-8 text-center text-xs text-gray-400">* Data toko, produk, harga, dan jam buka itu kondisional. Dan tidak termasuk harga jasa/ongkir pengiriman ke lokasi tujuan.</p>
+      </div>
+
+      <div id="productView" class="hidden"></div>
+    </div>
+  </section>
+
+  <!-- 6. GABUNG MITRA -->
+  <section id="mitra" class="py-20 lg:py-28">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto reveal">
+        <span class="text-gold font-semibold text-sm tracking-widest uppercase">Gabung Mitra</span>
+        <h2 class="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900">Tumbuh Bersama OK BESS</h2>
+        <p class="mt-3 text-gray-600">Jadilah bagian dari gerakan ekonomi lokal. Pilih jalur kemitraan yang sesuai untuk Anda.</p>
+      </div>
+
+      <div class="mt-10 flex justify-center">
+        <div class="inline-flex bg-soft rounded-full p-1.5">
+          <button data-tab="merchant" class="tab-btn px-6 py-2.5 rounded-full text-sm font-semibold transition bg-gold text-white shadow">
+            <i class="fa-solid fa-store mr-1"></i> Mitra Merchant UMKM
+          </button>
+          <button data-tab="driver" class="tab-btn px-6 py-2.5 rounded-full text-sm font-semibold transition text-gray-600 hover:text-emerald">
+            <i class="fa-solid fa-motorcycle mr-1"></i> Jadi Driver
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-8 bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden grid md:grid-cols-5">
+        <div id="tabInfo" class="md:col-span-2 bg-gradient-to-br from-gold to-gold-600 text-white p-8">
+          <h3 id="infoTitle" class="text-2xl font-bold">Daftar Mitra Merchant UMKM</h3>
+          <p id="infoDesc" class="mt-2 text-sm text-white/85">Tampilkan toko &amp; produk Anda di katalog website dan jangkau lebih banyak pelanggan.</p>
+          <ul id="infoList" class="mt-6 space-y-3 text-sm">
+            <li class="flex gap-3"><i class="fa-solid fa-circle-check text-white/90 mt-0.5"></i> Tampil di katalog OK BESS</li>
+            <li class="flex gap-3"><i class="fa-solid fa-circle-check text-white/90 mt-0.5"></i> Pengunjung siap beli</li>
+            <li class="flex gap-3"><i class="fa-solid fa-circle-check text-white/90 mt-0.5"></i> Tanpa biaya promosi mahal</li>
+            <li class="flex gap-3"><i class="fa-solid fa-circle-check text-white/90 mt-0.5"></i> Pengantaran kami urus</li>
+            <li class="flex gap-3"><i class="fa-solid fa-circle-check text-white/90 mt-0.5"></i> Kita tumbuh bersama</li>
+          </ul>
+        </div>
+
+        <div class="md:col-span-3 p-5 sm:p-8">
+          <form id="form-merchant" class="tab-panel space-y-6">
+            <p class="text-xs text-gray-500">Isi data di bawah agar toko Anda cepat tampil di katalog. Kolom bertanda <span class="text-red-500 font-bold">*</span> wajib diisi.</p>
+
+            <div data-section="DATA USAHA" class="space-y-4">
+              <p class="text-[11px] font-bold tracking-wider uppercase text-gold-600 border-b border-gold-100 pb-1.5">1. Data Usaha</p>
+              <div data-field>
+                <label class="text-xs font-semibold text-gray-600">Nama Usaha <span class="text-red-500">*</span></label>
+                <input type="text" required placeholder="Contoh: Seblak ummi arin" class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold" />
+              </div>
+              <div data-field>
+                <label class="text-xs font-semibold text-gray-600">Nama Pemilik &amp; WhatsApp <span class="text-red-500">*</span></label>
+                <input type="text" required placeholder="Nama - 08xxxxxxxxxx" class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold" />
+              </div>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div data-field>
+                  <label class="text-xs font-semibold text-gray-600">Kecamatan <span class="text-red-500">*</span></label>
+                  <select required data-kec class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold bg-white"></select>
+                </div>
+                <div data-field>
+                  <label class="text-xs font-semibold text-gray-600">Kategori Usaha <span class="text-red-500">*</span></label>
+                  <select required class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold bg-white">
+                    <option value="">Pilih...</option><option>Makanan Berat</option><option>Camilan &amp; Jajanan</option><option>Minuman</option><option>Oleh-oleh</option><option>Toko Kelontong</option><option>Lainnya</option>
+                  </select>
+                </div>
+              </div>
+              <div data-field>
+                <label class="text-xs font-semibold text-gray-600">Alamat Lengkap / Patokan <span class="text-red-500">*</span></label>
+                <input type="text" required placeholder="Contoh: Depan Smabes Besuki (Rawan)" class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold" />
+                <p class="mt-1 text-[11px] text-gray-400">Akan tampil di katalog agar pembeli mudah menemukan lokasi.</p>
+              </div>
+            </div>
+
+            <div data-section="JAM BUKA" class="space-y-4">
+              <p class="text-[11px] font-bold tracking-wider uppercase text-gold-600 border-b border-gold-100 pb-1.5">2. Jam Buka</p>
+              <div class="grid grid-cols-2 gap-4">
+                <div data-field>
+                  <label class="text-xs font-semibold text-gray-600">Jam Buka <span class="text-red-500">*</span></label>
+                  <input type="time" required class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold" />
+                </div>
+                <div data-field>
+                  <label class="text-xs font-semibold text-gray-600">Jam Tutup <span class="text-red-500">*</span></label>
+                  <input type="time" required class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold" />
+                </div>
+              </div>
+              <div data-field>
+                <label class="text-xs font-semibold text-gray-600">Hari Libur (jika ada)</label>
+                <input type="text" placeholder="Contoh: Hari Jumat / Buka setiap hari" class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold" />
+              </div>
+            </div>
+
+            <div data-section="PRODUK UNGGULAN" class="space-y-4">
+              <p class="text-[11px] font-bold tracking-wider uppercase text-gold-600 border-b border-gold-100 pb-1.5">3. Produk Unggulan</p>
+              <div class="grid sm:grid-cols-2 gap-4">
+                <div data-field>
+                  <label class="text-xs font-semibold text-gray-600">Nama Produk <span class="text-red-500">*</span></label>
+                  <input type="text" required placeholder="Contoh: Seblak Original" class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold" />
+                </div>
+                <div data-field>
+                  <label class="text-xs font-semibold text-gray-600">Harga Mulai dari (Rp) <span class="text-red-500">*</span></label>
+                  <input type="number" required min="0" step="500" inputmode="numeric" data-rupiah placeholder="Contoh: 10000" class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold" />
+                </div>
+              </div>
+              <fieldset data-field>
+                <legend class="text-xs font-semibold text-gray-600">Rasa Produk (boleh pilih lebih dari satu)</legend>
+                <div id="mRasa" class="mt-2 flex flex-wrap gap-2"></div>
+              </fieldset>
+              <p class="mt-1 text-[11px] text-gray-400">Produk lainnya bisa dikirim lewat WhatsApp setelah pendaftaran.</p>
+            </div>
+
+            <div data-section="INFO TAMBAHAN" class="space-y-4">
+              <p class="text-[11px] font-bold tracking-wider uppercase text-gold-600 border-b border-gold-100 pb-1.5">4. Info Tambahan <span class="normal-case font-medium text-gray-400">(opsional)</span></p>
+              <div data-field>
+                <label class="text-xs font-semibold text-gray-600">Deskripsi Singkat Usaha</label>
+                <textarea rows="2" maxlength="120" placeholder="Contoh: Seblak pedas gurih, level pedas bisa request." class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold resize-none"></textarea>
+                <p class="mt-1 text-[11px] text-gray-400">Maksimal 120 karakter, tampil di kartu toko.</p>
+              </div>
+              <fieldset data-field>
+                <legend class="text-xs font-semibold text-gray-600">Layanan</legend>
+                <div id="mLayanan" class="mt-2 flex flex-wrap gap-2"></div>
+              </fieldset>
+              <div data-field>
+                <label class="text-xs font-semibold text-gray-600">Link Instagram / Facebook / Google Maps</label>
+                <input type="text" placeholder="Contoh: instagram.com/namausaha" class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-gold focus:border-gold" />
+              </div>
+              <p class="text-xs text-gray-500 bg-gold-50 rounded-xl px-4 py-3"><i class="fa-solid fa-camera text-gold mr-1"></i> Foto toko dan foto produk dikirim lewat WhatsApp setelah pendaftaran. Admin OK BESS akan menghubungi Anda untuk meminta fotonya.</p>
+            </div>
+
+            <button type="submit" class="w-full bg-gold hover:bg-gold-600 text-white font-semibold py-3.5 rounded-xl shadow-lg shadow-gold/30 hover:-translate-y-0.5 transition">
+              <i class="fa-solid fa-paper-plane mr-1"></i> Kirim Pendaftaran Merchant
+            </button>
+          </form>
+
+          <form id="form-driver" class="tab-panel space-y-4 hidden">
+            <div>
+              <label class="text-xs font-semibold text-gray-600">Nama Lengkap</label>
+              <input type="text" required placeholder="Contoh: Budi Santoso" class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald focus:border-emerald" />
+            </div>
+            <div>
+              <label class="text-xs font-semibold text-gray-600">Nomor WhatsApp</label>
+              <input type="tel" required placeholder="08xxxxxxxxxx" class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald focus:border-emerald" />
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label class="text-xs font-semibold text-gray-600">Kecamatan</label>
+                <select required data-kec class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald bg-white"></select>
+              </div>
+              <div>
+                <label class="text-xs font-semibold text-gray-600">Jenis Kendaraan</label>
+                <select required class="mt-1 w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald bg-white">
+                  <option value="">Pilih...</option><option>Motor</option><option>Mobil</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" class="w-full bg-emerald hover:bg-emerald-600 text-white font-semibold py-3.5 rounded-xl shadow-lg shadow-emerald/30 hover:-translate-y-0.5 transition">
+              <i class="fa-solid fa-paper-plane mr-1"></i> Kirim Pendaftaran Driver
+            </button>
+          </form>
+
+          <p id="formMsg" class="hidden mt-4 text-sm text-center font-medium text-emerald-700 bg-emerald-50 rounded-xl py-3 px-4"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4b. INFO TARIF & ONGKIR -->
+  <section id="tarif" class="py-20 lg:py-24 bg-gradient-to-b from-gold-50 to-white scroll-mt-16">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto reveal">
+        <span class="text-gold font-semibold text-sm tracking-widest uppercase">Info Jasa &amp; Ongkir</span>
+        <h2 class="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900">Informasi Tarif &amp; Ongkir OK BESS</h2>
+        <p class="mt-3 text-gray-600">Tarif transparan dan bersahabat, disesuaikan dengan jarak tempuh, waktu, serta kondisi di lapangan.</p>
+      </div>
+
+      <div class="mt-10 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+        <div class="reveal bg-white rounded-2xl p-4 sm:p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition">
+          <div class="w-11 h-11 rounded-xl bg-emerald-100 text-emerald flex items-center justify-center text-xl"><i class="fa-solid fa-sun"></i></div>
+          <h3 class="mt-3 font-bold text-gray-900 text-sm sm:text-base">Tarif Normal</h3>
+          <p class="text-[11px] sm:text-xs text-gray-500">06.00 - 20.59 WIB</p>
+          <p class="mt-2 text-xl sm:text-2xl font-extrabold text-emerald-700">Rp7.000</p>
+          <p class="text-[11px] sm:text-xs text-gray-500">untuk 0 - 3 km</p>
+        </div>
+        <div class="reveal bg-white rounded-2xl p-4 sm:p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition">
+          <div class="w-11 h-11 rounded-xl bg-gray-800 text-gold flex items-center justify-center text-xl"><i class="fa-solid fa-moon"></i></div>
+          <h3 class="mt-3 font-bold text-gray-900 text-sm sm:text-base">Tarif Malam</h3>
+          <p class="text-[11px] sm:text-xs text-gray-500">21.00 - 05.59 WIB</p>
+          <p class="mt-2 text-xl sm:text-2xl font-extrabold text-gold-600">Rp10.000</p>
+          <p class="text-[11px] sm:text-xs text-gray-500">untuk 0 - 3 km</p>
+        </div>
+        <div class="reveal bg-white rounded-2xl p-4 sm:p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition">
+          <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center text-xl"><i class="fa-solid fa-cloud-showers-heavy"></i></div>
+          <h3 class="mt-3 font-bold text-gray-900 text-sm sm:text-base">Tarif Hujan</h3>
+          <p class="text-[11px] sm:text-xs text-gray-500">Saat kondisi hujan</p>
+          <p class="mt-2 text-xl sm:text-2xl font-extrabold text-gold-600">Rp10.000</p>
+          <p class="text-[11px] sm:text-xs text-gray-500">untuk 0 - 3 km</p>
+        </div>
+        <div class="reveal bg-white rounded-2xl p-4 sm:p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition">
+          <div class="w-11 h-11 rounded-xl bg-gold-100 text-gold flex items-center justify-center text-xl"><i class="fa-solid fa-location-crosshairs"></i></div>
+          <h3 class="mt-3 font-bold text-gray-900 text-sm sm:text-base">Tambah Titik</h3>
+          <p class="text-[11px] sm:text-xs text-gray-500">Titik beli / mampir</p>
+          <p class="mt-2 text-xl sm:text-2xl font-extrabold text-emerald-700">+Rp2.000</p>
+          <p class="text-[11px] sm:text-xs text-gray-500">per titik</p>
+        </div>
+      </div>
+
+      <div class="mt-10 reveal bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+        <div class="bg-gradient-to-r from-emerald to-emerald-700 text-white px-5 sm:px-8 py-4 flex items-center gap-3">
+          <i class="fa-solid fa-table-list text-xl"></i>
+          <h3 class="font-bold text-base sm:text-lg">Tabel Ringkas Tarif</h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm min-w-[620px]">
+            <thead class="bg-gold-50 text-gray-700">
+              <tr>
+                <th class="text-left font-semibold px-5 py-3">Kategori Layanan</th>
+                <th class="text-left font-semibold px-5 py-3">Jarak 0 - 3 km</th>
+                <th class="text-left font-semibold px-5 py-3">Jarak di Atas 3 km</th>
+                <th class="text-left font-semibold px-5 py-3">Keterangan Tambahan</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr class="hover:bg-emerald-50/50">
+                <td class="px-5 py-3.5 font-semibold text-gray-900"><i class="fa-solid fa-sun text-emerald mr-2"></i>Tarif Normal <span class="block text-[11px] font-normal text-gray-500 ml-6">06.00 - 20.59 WIB</span></td>
+                <td class="px-5 py-3.5 font-bold text-emerald-700">Rp7.000</td>
+                <td class="px-5 py-3.5">Mulai Rp7.000 - Rp10.000+</td>
+                <td class="px-5 py-3.5 text-gray-500">Menyesuaikan jarak tempuh</td>
+              </tr>
+              <tr class="hover:bg-emerald-50/50">
+                <td class="px-5 py-3.5 font-semibold text-gray-900"><i class="fa-solid fa-moon text-gold mr-2"></i>Tarif Malam <span class="block text-[11px] font-normal text-gray-500 ml-6">21.00 - 05.59 WIB</span></td>
+                <td class="px-5 py-3.5 font-bold text-gold-600">Rp10.000</td>
+                <td class="px-5 py-3.5">Menyesuaikan jarak</td>
+                <td class="px-5 py-3.5 text-gray-500">Berlaku di jam malam</td>
+              </tr>
+              <tr class="hover:bg-emerald-50/50">
+                <td class="px-5 py-3.5 font-semibold text-gray-900"><i class="fa-solid fa-cloud-showers-heavy text-sky-500 mr-2"></i>Tarif Cuaca Hujan</td>
+                <td class="px-5 py-3.5 font-bold text-gold-600">Rp10.000</td>
+                <td class="px-5 py-3.5">Menyesuaikan jarak</td>
+                <td class="px-5 py-3.5 text-gray-500">Pertimbangan keselamatan &amp; kesehatan driver</td>
+              </tr>
+              <tr class="hover:bg-emerald-50/50">
+                <td class="px-5 py-3.5 font-semibold text-gray-900"><i class="fa-solid fa-basket-shopping text-emerald mr-2"></i>Tambah Titik Belanja</td>
+                <td class="px-5 py-3.5 font-bold text-emerald-700">+Rp2.000 / titik</td>
+                <td class="px-5 py-3.5">Menyesuaikan jarak titik</td>
+                <td class="px-5 py-3.5 text-gray-500">Berlaku untuk titip beli / mampir</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="px-5 sm:px-8 py-4 bg-gray-50 text-xs text-gray-500 border-t border-gray-100"><i class="fa-solid fa-circle-info text-gold mr-1"></i> Catatan: seluruh tarif bersifat fleksibel dan dapat menyesuaikan apabila rute/medan jalan cukup ekstrem atau barang bawaan tergolong berat/berukuran besar.</p>
+      </div>
+
+      <div class="mt-6 reveal bg-gradient-to-br from-gold to-gold-600 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
+        <div class="shrink-0 w-14 h-14 rounded-2xl bg-white/20 flex items-center justify-center text-3xl"><i class="fa-solid fa-map-location-dot"></i></div>
+        <p class="flex-1 text-sm sm:text-base">Silakan <b>share lokasi atau alamat lengkapnya</b> ya Kak, biar admin hitungkan ongkir pastinya! 😊🙏</p>
+        <a href="#" data-wa="Halo OK BESS, saya mau tanya ongkir. Jemput/ambil di: ... Tujuan: ..." target="_blank" rel="noopener" class="wa-link shrink-0 inline-flex items-center gap-2 bg-white text-wa-dark font-semibold px-6 py-3 rounded-full shadow-lg hover:-translate-y-1 transition">
+          <i class="fa-brands fa-whatsapp text-xl"></i> Tanya Ongkir
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. HUBUNGI KAMI -->
+  <section id="kontak" class="py-20 lg:py-24 bg-gradient-to-b from-emerald-50 to-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+        <div class="reveal">
+          <span class="text-wa-dark font-semibold text-sm tracking-widest uppercase">Hubungi Kami</span>
+          <h2 class="mt-2 text-3xl sm:text-4xl font-extrabold text-gray-900">Ada Pertanyaan? <span class="text-wa-dark">Chat Aja</span> Admin OK BESS</h2>
+          <p class="mt-3 text-gray-600">Admin kami siap membalas setiap hari. Pilih kebutuhan Anda, pesan otomatis terisi, tinggal kirim.</p>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="#" data-wa="Halo OK BESS, saya mau pesan *OJEK*." target="_blank" rel="noopener" class="wa-link inline-flex items-center gap-2 bg-white border border-wa/40 hover:bg-wa hover:text-white text-wa-dark text-sm font-semibold px-4 py-2 rounded-full shadow-sm hover:-translate-y-0.5 transition"><i class="fa-solid fa-motorcycle"></i> Ojek</a>
+            <a href="#" data-wa="Halo OK BESS, saya mau *KIRIM PAKET*." target="_blank" rel="noopener" class="wa-link inline-flex items-center gap-2 bg-white border border-wa/40 hover:bg-wa hover:text-white text-wa-dark text-sm font-semibold px-4 py-2 rounded-full shadow-sm hover:-translate-y-0.5 transition"><i class="fa-solid fa-box-open"></i> Kirim Paket</a>
+            <a href="#" data-wa="Halo OK BESS, saya mau *TITIP MAKAN*." target="_blank" rel="noopener" class="wa-link inline-flex items-center gap-2 bg-white border border-wa/40 hover:bg-wa hover:text-white text-wa-dark text-sm font-semibold px-4 py-2 rounded-full shadow-sm hover:-translate-y-0.5 transition"><i class="fa-solid fa-bowl-food"></i> Titip Makan</a>
+            <a href="#" data-wa="Halo OK BESS, saya mau *TITIP BELANJA*." target="_blank" rel="noopener" class="wa-link inline-flex items-center gap-2 bg-white border border-wa/40 hover:bg-wa hover:text-white text-wa-dark text-sm font-semibold px-4 py-2 rounded-full shadow-sm hover:-translate-y-0.5 transition"><i class="fa-solid fa-basket-shopping"></i> Titip Belanja</a>
+          </div>
+
+          <ol class="mt-8 space-y-4 text-sm">
+            <li class="flex gap-4 items-start"><span class="w-9 h-9 shrink-0 rounded-full bg-wa text-white font-bold flex items-center justify-center">1</span><span><b class="text-gray-900">Klik tombol WhatsApp</b><br/>Pesan otomatis sudah terisi sesuai layanan.</span></li>
+            <li class="flex gap-4 items-start"><span class="w-9 h-9 shrink-0 rounded-full bg-wa text-white font-bold flex items-center justify-center">2</span><span><b class="text-gray-900">Kirim lokasi &amp; detail</b><br/>Admin konfirmasi ongkos dan mencarikan driver terdekat.</span></li>
+            <li class="flex gap-4 items-start"><span class="w-9 h-9 shrink-0 rounded-full bg-wa text-white font-bold flex items-center justify-center">3</span><span><b class="text-gray-900">Driver datang, bayar tunai</b><br/>Pantau lewat chat sampai pesanan selesai.</span></li>
+          </ol>
+
+          <a href="#" data-wa="Halo OK BESS, saya mau tanya-tanya dulu." target="_blank" rel="noopener" class="wa-link pulse-ring mt-8 inline-flex items-center gap-3 bg-wa hover:bg-wa-dark text-white font-bold text-lg px-8 py-4 rounded-full shadow-xl hover:-translate-y-1 transition">
+            <i class="fa-brands fa-whatsapp text-3xl"></i> Chat WhatsApp Sekarang
+          </a>
+          <p class="mt-3 text-xs text-gray-500"><i class="fa-regular fa-clock mr-1"></i> Admin online setiap hari, 06.00 - 23.00 WIB</p>
+        </div>
+
+        <div class="reveal">
+          <div class="rounded-3xl overflow-hidden shadow-2xl border border-gray-100 max-w-md mx-auto">
+            <div class="bg-wa-deep text-white px-5 py-4 flex items-center gap-3">
+              <img src="logookbess.jpeg" alt="Logo OK BESS" class="w-11 h-11 rounded-full object-contain bg-white shadow-lg shadow-emerald/30" />
+              <div class="leading-tight">
+                <p class="font-semibold">OK BESS Admin <i class="fa-solid fa-circle-check text-wa text-xs"></i></p>
+                <p class="text-xs text-white/70">Biasanya membalas dalam beberapa menit</p>
+              </div>
+            </div>
+            <div class="wa-pattern px-4 py-6 space-y-3 text-sm">
+              <div class="relative bubble-in max-w-[85%] bg-white rounded-xl rounded-tl-none px-4 py-3 shadow-sm">
+                Halo kak! 👋 Selamat datang di <b>OK BESS</b>.<br/>Mau pesan apa hari ini?
+              </div>
+              <div class="relative bubble-in max-w-[85%] bg-white rounded-xl rounded-tl-none px-4 py-3 shadow-sm">
+                🏍️ Ojek<br/>📦 Kirim Paket<br/>🍜 Titip Makan<br/>🛒 Titip Belanja
+              </div>
+              <div class="relative bubble-out ml-auto max-w-[85%] bg-[#DCF8C6] rounded-xl rounded-tr-none px-4 py-3 shadow-sm">
+                Mau titip makan geprek dong 😋 sambal dipisah yaa.
+              </div>
+            </div>
+            <div class="bg-white p-5 space-y-3 text-sm">
+              <div class="flex gap-3"><i class="fa-brands fa-whatsapp text-wa-dark text-lg mt-0.5"></i><span><b class="text-gray-900">WhatsApp</b><br/><span id="waDisplay">0812-0000-0000</span></span></div>
+              <div class="flex gap-3"><i class="fa-solid fa-location-dot text-gold text-lg mt-0.5"></i><span><b class="text-gray-900">Kantor Operasional</b><br/>Pendopo Pate Alos, Besuki Raya, Jawa Timur</span></div>
+              <div class="flex gap-3"><i class="fa-solid fa-envelope text-emerald text-lg mt-0.5"></i><span><b class="text-gray-900">Email</b><br/>syauqialex979@gmail.com</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. FOOTER -->
+  <footer class="bg-gray-900 text-gray-300 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div>
+          <a href="#beranda" class="flex items-center gap-2.5">
+            <img src="logookbess.jpeg" alt="Logo OK BESS" class="w-11 h-11 rounded-full object-contain bg-white shadow-lg shadow-emerald/30" />
+            <span class="font-extrabold text-xl text-white">OK <span class="text-gold">BESS</span></span>
+          </a>
+          <p class="mt-4 text-sm text-gray-400">Ojol Keresidenan Besuki. Solusi Transportasi &amp; Antar Layanan Lokal Besuki Raya.</p>
+          <div class="mt-5 flex gap-3">
+            <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-emerald hover:-translate-y-1 flex items-center justify-center transition"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="Facebook" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-emerald hover:-translate-y-1 flex items-center justify-center transition"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="TikTok" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-emerald hover:-translate-y-1 flex items-center justify-center transition"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="#" aria-label="YouTube" class="w-10 h-10 rounded-full bg-gray-800 hover:bg-emerald hover:-translate-y-1 flex items-center justify-center transition"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Menu</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#beranda" class="hover:text-gold transition">Beranda</a></li>
+            <li><a href="#layanan" class="hover:text-gold transition">Layanan</a></li>
+            <li><a href="#tarif" class="hover:text-gold transition">Tarif &amp; Ongkir</a></li>
+            <li><a href="#katalog" class="hover:text-gold transition">Katalog UMKM</a></li>
+            <li><a href="#mitra" class="hover:text-gold transition">Gabung Mitra</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Layanan</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#layanan" class="hover:text-gold transition">Ojek</a></li>
+            <li><a href="#layanan" class="hover:text-gold transition">Kirim Paket</a></li>
+            <li><a href="#katalog" class="hover:text-gold transition">Titip Makan</a></li>
+            <li><a href="#layanan" class="hover:text-gold transition">Titip Belanja</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Wilayah Layanan</h4>
+          <p class="text-sm text-gray-400">Besuki dan Sekitarnya.</p>
+          <a href="#" data-wa="Halo OK BESS, saya mau tanya." target="_blank" rel="noopener" class="wa-link mt-4 inline-flex items-center gap-2 bg-wa hover:bg-wa-dark text-white text-sm font-semibold px-5 py-2.5 rounded-full transition"><i class="fa-brands fa-whatsapp"></i> Hubungi Kami</a>
+        </div>
+      </div>
+      <div class="mt-12 pt-6 border-t border-gray-800 text-center text-xs text-gray-500">
+        &copy; <span id="year"></span> OK BESS (Ojol Keresidenan Besuki). Hak cipta dilindungi.
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" data-wa="Halo OK BESS, saya mau pesan layanan." target="_blank" rel="noopener" aria-label="Chat WhatsApp" class="wa-link pulse-ring fixed bottom-5 right-5 z-50 w-14 h-14 rounded-full bg-wa hover:bg-wa-dark text-white flex items-center justify-center text-3xl shadow-xl hover:scale-110 transition">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- 9. JAVASCRIPT -->
+  <script>
+    // ================== PENGATURAN ==================
+    const WA_NUMBER = '6283186578686';
+
+    const KECAMATAN = [
+      'Arjasa', 'Asembagus', 'Banyuglugur', 'Banyuputih', 'Besuki', 'Bungatan', 'Jangkar', 'Jatibanteng', 'Kapongan',
+      'Kendit', 'Mangaran', 'Mlandingan', 'Panarukan', 'Panji', 'Situbondo', 'Suboh', 'Sumbermalang'
+    ];
+
+    const RASA = ['Manis', 'Asin', 'Pedas', 'Gurih', 'Asam', 'Segar'];
+
+    // ================== DATA TOKO & WARUNG ==================
+    const STORES = [
+      {
+        name: 'Wulan Besuki (WB)', type: 'Warung Camilan', kec: 'Besuki', place: 'Rawan Barat Besuki, Situbondo',
+        start: 6, end: 19, icon: 'fa-bowl-rice', photo: 'KotelWulanBes.jpeg',
+        desc: 'Kotel khas Besuki dengan cita rasa rumahan.',
+        products: [
+          { name: 'Kotel Khas Besuki',      price: 15000, rasa: ['Gurih', 'Pedas'],          icon: 'fa-bowl-rice',  photo: 'KotelWulanBes.jpeg' },
+        ]
+      },
+      {
+        name: 'Dimsum You', type: 'Warung Camilan', kec: 'Besuki', place: 'Depan Smabes Besuki (Rawan)',
+        start: 15, end: 22, icon: 'fa-bowl-rice', photo: 'dimsumkudsi.jpeg',
+        desc: 'Lezatnya bikin ketagihan.',
+        products: [
+          { name: 'Dimsum You',      price: 10000, rasa: ['Gurih', 'Pedas', 'creamy'],          icon: 'fa-bowl-rice',  photo: 'menudimsumyou.jpeg' },
+        ]
+      },
+      {
+        name: 'Pukis Lumer', type: 'Warung Camilan', kec: 'Besuki', place: 'Jl. Ijen, Besuki',
+        start: 15, end: 22, icon: 'fa-leaf', photo: 'pukislumerridwan.jpeg',
+        desc: 'Lembut Lumer Enak!.',
+        products: [
+          { name: 'Pukis Lumer',    price: 10000, rasa: ['Manis', 'Segar', 'Creamy'], icon: 'fa-leaf',       photo: 'pukislumerridwan.jpeg' },
+          { name: 'Pukis Lumer',    price: 10000, rasa: ['Tiramisu', 'Coklat', 'Macha', 'Strawberry', 'Taro'], icon: 'fa-egg',        photo: 'pukislumerridwan.jpeg' },        ]
+      },
+      {
+        name: 'Sate Ikan Pasir Putih', type: 'Warung Seafood', kec: 'Bungatan', place: 'Pantai Pasir Putih, Bungatan',
+        start: 10, end: 22, icon: 'fa-fish', photo: 'foto/toko/sate-ikan.jpg',
+        desc: 'Olahan ikan laut segar dibakar langsung di pinggir pantai.',
+        products: [
+          { name: 'Sate Ikan Tuna (10 tusuk)', price: 20000, rasa: ['Gurih', 'Asin'],  icon: 'fa-fish',       photo: 'foto/produk/sate-ikan.jpg' },
+          { name: 'Sate Ikan + Lontong',   price: 25000, rasa: ['Gurih'],          icon: 'fa-fish',       photo: 'foto/produk/sate-lontong.jpg' },
+          { name: 'Ikan Bakar Kecap',      price: 30000, rasa: ['Manis', 'Gurih'], icon: 'fa-fire',       photo: 'foto/produk/ikan-bakar.jpg' },
+          { name: 'Es Kelapa Muda',        price: 8000,  rasa: ['Manis', 'Segar'], icon: 'fa-glass-water', photo: 'foto/produk/es-kelapa.jpg' }
+        ]
+      },
+      {
+        name: 'Bakso Cak Hari', type: 'Warung Bakso', kec: 'Panarukan', place: 'Jl. Raya Panarukan',
+        start: 10, end: 21.5, icon: 'fa-bowl-food', photo: 'foto/toko/bakso-cak-hari.jpg',
+        desc: 'Bakso urat besar dengan kuah kaldu sapi yang gurih.',
+        products: [
+          { name: 'Bakso Urat Jumbo',      price: 16000, rasa: ['Gurih', 'Asin'],  icon: 'fa-bowl-food',  photo: 'foto/produk/bakso-urat.jpg' },
+          { name: 'Bakso Biasa',           price: 12000, rasa: ['Gurih'],          icon: 'fa-bowl-food',  photo: 'foto/produk/bakso-biasa.jpg' },
+          { name: 'Mie Ayam Bakso',        price: 14000, rasa: ['Gurih', 'Asin'],  icon: 'fa-bowl-rice',  photo: 'foto/produk/mie-ayam.jpg' },
+          { name: 'Es Jeruk',              price: 5000,  rasa: ['Asam', 'Segar'],  icon: 'fa-martini-glass-citrus', photo: 'foto/produk/es-jeruk-bakso.jpg' }
+        ]
+      },
+      {
+        name: 'Rujak Petis Bu Nia', type: 'Warung Rujak', kec: 'Kendit', place: 'Pasar Kendit',
+        start: 9, end: 17, icon: 'fa-pepper-hot', photo: 'foto/toko/rujak-bu-nia.jpg',
+        desc: 'Rujak petis segar, pedasnya bisa diatur sesuai selera.',
+        products: [
+          { name: 'Rujak Petis Pedas',     price: 10000, rasa: ['Pedas', 'Manis', 'Asam'], icon: 'fa-pepper-hot', photo: 'foto/produk/rujak-petis.jpg' },
+          { name: 'Rujak Soto',            price: 13000, rasa: ['Pedas', 'Gurih'], icon: 'fa-bowl-food',  photo: 'foto/produk/rujak-soto.jpg' },
+          { name: 'Es Dawet Ayu',          price: 7000,  rasa: ['Manis', 'Segar'], icon: 'fa-glass-water', photo: 'foto/produk/es-dawet.jpg' }
+        ]
+      },
+      {
+        name: 'Kue Basah Bu Lastri', type: 'Toko Kue', kec: 'Panji', place: 'Pasar Panji',
+        start: 4.5, end: 10, icon: 'fa-cake-candles', photo: 'foto/toko/kue-bu-lastri.jpg',
+        desc: 'Jajan pasar tradisional dibuat segar setiap pagi.',
+        products: [
+          { name: 'Jajan Pasar (isi 6)',   price: 18000, rasa: ['Manis'],          icon: 'fa-cake-candles', photo: 'foto/produk/jajan-pasar.jpg' },
+          { name: 'Klepon (isi 10)',       price: 10000, rasa: ['Manis'],          icon: 'fa-cookie',     photo: 'foto/produk/klepon.jpg' },
+          { name: 'Lemper Ayam',           price: 4000,  rasa: ['Gurih'],          icon: 'fa-cookie-bite', photo: 'foto/produk/lemper.jpg' },
+          { name: 'Onde-onde (isi 5)',     price: 10000, rasa: ['Manis'],          icon: 'fa-cookie',     photo: 'foto/produk/onde-onde.jpg' }
+        ]
+      },
+      {
+        name: 'Keripik Bu Ida', type: 'Toko Oleh-oleh', kec: 'Jangkar', place: 'Jl. Raya Jangkar',
+        start: 8, end: 17, icon: 'fa-cookie-bite', photo: 'foto/toko/keripik-bu-ida.jpg',
+        desc: 'Aneka keripik renyah untuk oleh-oleh khas Situbondo.',
+        products: [
+          { name: 'Keripik Pisang Balado 250g', price: 20000, rasa: ['Pedas', 'Asin'], icon: 'fa-cookie-bite', photo: 'foto/produk/keripik-pisang.jpg' },
+          { name: 'Keripik Singkong Original',  price: 15000, rasa: ['Asin', 'Gurih'], icon: 'fa-cookie-bite', photo: 'foto/produk/keripik-singkong.jpg' },
+          { name: 'Keripik Tempe',              price: 12000, rasa: ['Gurih', 'Asin'], icon: 'fa-cookie-bite', photo: 'foto/produk/keripik-tempe.jpg' }
+        ]
+      },
+      {
+        name: 'Keripik Bu Ida', type: 'Toko Oleh-oleh', kec: 'Jangkar', place: 'Jl. Raya Jangkar',
+        start: 8, end: 17, icon: 'fa-cookie-bite', photo: 'foto/toko/keripik-bu-ida.jpg',
+        desc: 'Aneka keripik renyah untuk oleh-oleh khas Situbondo.',
+        products: [
+          { name: 'Keripik Pisang Balado 250g', price: 20000, rasa: ['Pedas', 'Asin'], icon: 'fa-cookie-bite', photo: 'foto/produk/keripik-pisang.jpg' },
+          { name: 'Keripik Singkong Original',  price: 15000, rasa: ['Asin', 'Gurih'], icon: 'fa-cookie-bite', photo: 'foto/produk/keripik-singkong.jpg' },
+          { name: 'Keripik Tempe',              price: 12000, rasa: ['Gurih', 'Asin'], icon: 'fa-cookie-bite', photo: 'foto/produk/keripik-tempe.jpg' }
+        ]
+      },
+      {
+        name: 'Es Jeruk Baluran', type: 'Kedai Minuman', kec: 'Banyuputih', place: 'Dekat Gerbang Baluran, Banyuputih',
+        start: 8, end: 17, icon: 'fa-martini-glass-citrus', photo: 'foto/toko/es-jeruk-baluran.jpg',
+        desc: 'Minuman dingin penyejuk setelah berwisata di Baluran.',
+        products: [
+          { name: 'Es Jeruk Nipis Segar',  price: 6000,  rasa: ['Asam', 'Segar'], icon: 'fa-martini-glass-citrus', photo: 'foto/produk/es-jeruk-nipis.jpg' },
+          { name: 'Es Kelapa Muda',        price: 8000,  rasa: ['Manis', 'Segar'], icon: 'fa-glass-water', photo: 'foto/produk/es-kelapa-baluran.jpg' },
+          { name: 'Es Teh Lemon',          price: 5000,  rasa: ['Asam', 'Manis', 'Segar'], icon: 'fa-glass-water', photo: 'foto/produk/es-teh-lemon.jpg' },
+          { name: 'Pisang Goreng Madu (isi 8)', price: 10000, rasa: ['Manis'], icon: 'fa-cookie-bite', photo: 'foto/produk/pisang-goreng.jpg' }
+        ]
+      }
+    ];
+
+    STORES.forEach(s => s.rasa = [...new Set(s.products.flatMap(p => p.rasa))]);
+
+    // ================== FUNGSI BANTU ==================
+    const rupiah = n => 'Rp' + n.toLocaleString('id-ID');
+    const fmtJam = h => { const j = Math.floor(h), m = Math.round((h - j) * 60); return String(j).padStart(2,'0') + '.' + String(m).padStart(2,'0'); };
+    const nowHour = () => { const d = new Date(); return d.getHours() + d.getMinutes() / 60; };
+    const isOpen = s => { const n = nowHour(); return n >= s.start && n < s.end; };
+    const waLink = text => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+
+    const imgWithFallback = (src, alt, icon, cls = '') => `
+      <img src="${src}" alt="${alt}" loading="lazy" class="w-full h-full object-cover ${cls}"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+      <div style="display:none" class="absolute inset-0 bg-gradient-to-br from-emerald-100 to-gold-100 items-center justify-center text-emerald text-3xl sm:text-5xl">
+        <i class="fa-solid ${icon}"></i>
+      </div>`;
+
+    document.querySelectorAll('[data-wa]').forEach(a => a.href = waLink(a.dataset.wa));
+    document.getElementById('waDisplay').textContent = '+' + WA_NUMBER.replace(/^(\d{2})(\d{3,4})(\d+)$/, '$1 $2-$3');
+
+    const kecSelect = document.getElementById('kecSelect');
+    KECAMATAN.forEach(k => kecSelect.insertAdjacentHTML('beforeend', `<option value="${k}">Kec. ${k}</option>`));
+    document.querySelectorAll('select[data-kec]').forEach(sel => {
+      sel.innerHTML = '<option value="">Pilih kecamatan...</option>' +
+        KECAMATAN.map(k => `<option>${k}</option>`).join('') + '<option>Di luar Situbondo</option>';
+    });
+
+    // ================== KATALOG: daftar toko ==================
+    const storeGrid = document.getElementById('storeGrid');
+    const storeView = document.getElementById('storeView');
+    const productView = document.getElementById('productView');
+    const searchInput = document.getElementById('searchInput');
+    const readyOnly = document.getElementById('readyOnly');
+    const emptyState = document.getElementById('emptyState');
+    const resultCount = document.getElementById('resultCount');
+    const rasaBar = document.getElementById('rasaBar');
+    let activeRasa = 'Semua';
+    // Jumlah toko / produk per "Selengkapnya" (kelipatan 3 agar baris penuh)
+    const STORE_PAGE = 9, PRODUCT_PAGE = 6;
+    let storeLimit = STORE_PAGE;
+
+    const chipOn  = 'bg-emerald text-white';
+    const chipOff = 'bg-soft text-gray-600 hover:bg-emerald-100';
+    rasaBar.innerHTML = ['Semua', ...RASA].map(r =>
+      `<button data-rasa="${r}" class="rasa-chip px-4 py-1.5 rounded-full text-xs font-semibold transition ${r === 'Semua' ? chipOn : chipOff}">${r === 'Semua' ? 'Semua Rasa' : r}</button>`
+    ).join('');
+
+    function renderStores() {
+      const q = searchInput.value.trim().toLowerCase();
+      const kec = kecSelect.value;
+      const list = STORES.map((s, i) => ({ s, i })).filter(({ s }) =>
+        (kec === 'Semua' || s.kec === kec) &&
+        (activeRasa === 'Semua' || s.rasa.includes(activeRasa)) &&
+        (!readyOnly.checked || isOpen(s)) &&
+        (!q || s.name.toLowerCase().includes(q) || s.products.some(p => p.name.toLowerCase().includes(q)))
+      );
+
+      const shown = list.slice(0, storeLimit);
+      const left = list.length - shown.length;
+      resultCount.textContent = `Menampilkan ${shown.length} dari ${list.length} toko & warung`;
+      document.getElementById('storeMoreWrap').classList.toggle('hidden', left <= 0);
+      document.getElementById('storeMoreCount').textContent = left;
+      emptyState.classList.toggle('hidden', list.length > 0);
+
+      storeGrid.innerHTML = shown.map(({ s, i }) => {
+        const open = isOpen(s);
+        const badge = open
+          ? '<span class="inline-flex items-center gap-1 text-[8px] sm:text-[11px] font-semibold bg-emerald text-white px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow"><i class="fa-solid fa-circle text-[5px]"></i> Buka</span>'
+          : '<span class="inline-flex items-center gap-1 text-[8px] sm:text-[11px] font-semibold bg-white text-gold-600 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full shadow"><i class="fa-regular fa-clock"></i> ' + fmtJam(s.start) + '</span>';
+        const minPrice = Math.min(...s.products.map(p => p.price));
+        const rasaTags = s.rasa.slice(0, 4).map(r => `<span class="text-[10px] font-semibold bg-gold-100 text-gold-600 px-2 py-0.5 rounded-full">${r}</span>`).join('');
+        return `
+          <article class="group bg-white rounded-xl sm:rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-1 sm:hover:-translate-y-2 transition duration-300 flex flex-col cursor-pointer" data-store="${i}" tabindex="0" role="button" aria-label="Lihat produk ${s.name}">
+            <div class="relative h-24 sm:h-44 bg-emerald-100 overflow-hidden">
+              ${imgWithFallback(s.photo, s.name, s.icon, 'group-hover:scale-110 transition duration-500')}
+              <div class="absolute top-1.5 left-1.5 sm:top-3 sm:left-3">${badge}</div>
+              <span class="hidden sm:inline absolute bottom-3 right-3 text-[11px] font-semibold bg-white/90 text-emerald-700 px-2.5 py-1 rounded-full shadow">${s.type}</span>
+            </div>
+            <div class="p-2 sm:p-6 flex flex-col flex-1">
+              <h3 class="text-[11px] sm:text-lg font-bold text-gray-900 leading-tight line-clamp-2">${s.name}</h3>
+              <p class="mt-0.5 text-[9px] text-emerald-700 font-semibold sm:hidden">${s.type}</p>
+              <p class="hidden sm:block mt-1 text-sm text-gray-600">${s.desc}</p>
+              <div class="hidden sm:flex mt-3 flex-wrap gap-1.5">${rasaTags}</div>
+              <ul class="mt-1.5 sm:mt-3 space-y-1 sm:space-y-1.5 text-[9px] sm:text-xs text-gray-500">
+                <li class="hidden sm:block"><i class="fa-regular fa-clock w-4 text-gold"></i> Buka: ${fmtJam(s.start)} - ${fmtJam(s.end)} WIB</li>
+                <li class="truncate sm:whitespace-normal"><i class="fa-solid fa-location-dot w-3 sm:w-4 text-emerald"></i> <span class="sm:hidden">Kec. ${s.kec}</span><span class="hidden sm:inline">${s.place} <span class="text-gray-400">(Kec. ${s.kec})</span></span></li>
+                <li class="hidden sm:block"><i class="fa-solid fa-utensils w-4 text-gold"></i> ${s.products.length} produk, mulai ${rupiah(minPrice)}</li>
+                <li class="sm:hidden text-gold-600 font-semibold">Mulai ${rupiah(minPrice)}</li>
+              </ul>
+              <span class="mt-auto pt-2 sm:pt-5">
+                <span class="flex items-center justify-center gap-1 sm:gap-2 bg-emerald group-hover:bg-emerald-600 text-white text-[10px] sm:text-sm font-semibold py-1.5 sm:py-2.5 rounded-full transition">
+                  <i class="fa-solid fa-store hidden sm:inline"></i> Lihat <span class="hidden sm:inline">Produk Toko</span> <i class="fa-solid fa-arrow-right text-[8px] sm:text-sm"></i>
+                </span>
+              </span>
+            </div>
+          </article>`;
+      }).join('');
+    }
+
+    // ================== KATALOG: produk satu toko ==================
+    function openStore(i) {
+      const s = STORES[i];
+      const open = isOpen(s);
+      const status = open
+        ? '<span class="inline-flex items-center gap-1 text-xs font-semibold bg-emerald text-white px-3 py-1 rounded-full"><i class="fa-solid fa-circle text-[6px]"></i> Buka sekarang</span>'
+        : '<span class="inline-flex items-center gap-1 text-xs font-semibold bg-gold-100 text-gold-600 px-3 py-1 rounded-full"><i class="fa-regular fa-clock"></i> Tutup, buka jam ' + fmtJam(s.start) + '</span>';
+
+      const productCards = s.products.map(p => {
+        const rasaTags = p.rasa.map(r => `<span class="text-[8px] sm:text-[10px] font-semibold bg-gold-100 text-gold-600 px-1.5 sm:px-2 py-0.5 rounded-full">${r}</span>`).join('');
+        const msg = `Halo OK BESS, saya mau *TITIP MAKAN*:\n- Menu: ${p.name}\n- Toko: ${s.name} (${s.place})\n- Harga: ${rupiah(p.price)}\nJumlah: ...\nAntar ke: ...`;
+        return `
+          <article class="group bg-white rounded-xl sm:rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col">
+            <div class="relative h-24 sm:h-44 bg-emerald-100 overflow-hidden">
+              ${imgWithFallback(p.photo, p.name + ' - ' + s.name, p.icon, 'group-hover:scale-110 transition duration-500')}
+            </div>
+            <div class="p-2 sm:p-5 flex flex-col flex-1">
+              <h4 class="font-bold text-[11px] sm:text-base text-gray-900 leading-snug line-clamp-2">${p.name}</h4>
+              <div class="mt-1 sm:mt-2 flex flex-wrap gap-1">${rasaTags}</div>
+              <p class="text-xs sm:text-xl font-extrabold text-gold-600 mt-1.5 sm:mt-3">${rupiah(p.price)}</p>
+              <a href="${waLink(msg)}" target="_blank" rel="noopener" class="mt-auto inline-flex items-center justify-center gap-1 sm:gap-2 bg-wa hover:bg-wa-dark text-white text-[10px] sm:text-sm font-semibold py-1.5 sm:py-2.5 rounded-full transition" style="margin-top:.5rem">
+                <i class="fa-brands fa-whatsapp text-sm sm:text-base"></i> <span class="sm:hidden">Pesan</span><span class="hidden sm:inline">Pesan via WhatsApp</span>
+              </a>
+            </div>
+          </article>`;
+      });
+
+      const askMsg = `Halo OK BESS, saya mau titip makan dari *${s.name}* (${s.place}). Menu: ...`;
+      productView.innerHTML = `
+        <div class="fade-in">
+          <button id="backBtn" class="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:text-emerald bg-white rounded-full px-5 py-2.5 shadow-sm hover:shadow transition">
+            <i class="fa-solid fa-arrow-left"></i> Kembali ke daftar toko
+          </button>
+
+          <div class="mt-6 bg-white rounded-3xl shadow-lg overflow-hidden grid md:grid-cols-5">
+            <div class="relative md:col-span-2 h-56 md:h-auto min-h-[14rem] bg-emerald-100 overflow-hidden">
+              ${imgWithFallback(s.photo, s.name, s.icon)}
+            </div>
+            <div class="md:col-span-3 p-6 sm:p-8">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-xs font-semibold bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full">${s.type}</span>
+                ${status}
+              </div>
+              <h2 class="mt-3 text-2xl sm:text-3xl font-extrabold text-gray-900">${s.name}</h2>
+              <p class="mt-2 text-gray-600">${s.desc}</p>
+              <ul class="mt-4 space-y-2 text-sm text-gray-600">
+                <li><i class="fa-regular fa-clock w-5 text-gold"></i> Jam buka: ${fmtJam(s.start)} - ${fmtJam(s.end)} WIB</li>
+                <li><i class="fa-solid fa-location-dot w-5 text-emerald"></i> ${s.place} (Kec. ${s.kec})</li>
+              </ul>
+              <a href="${waLink(askMsg)}" target="_blank" rel="noopener" class="mt-5 inline-flex items-center gap-2 border-2 border-wa text-wa-dark hover:bg-wa hover:text-white text-sm font-semibold px-5 py-2 rounded-full transition">
+                <i class="fa-brands fa-whatsapp"></i> Tanya toko ini
+              </a>
+            </div>
+          </div>
+
+          <div class="mt-10 flex items-end justify-between flex-wrap gap-3">
+            <h3 class="text-xl sm:text-2xl font-bold text-gray-900">Produk di ${s.name}</h3>
+            <p class="text-sm text-gray-500">${s.products.length} produk tersedia</p>
+          </div>
+          <div id="productGrid" class="mt-5 grid grid-cols-3 gap-2 sm:gap-5 lg:gap-6">${productCards.slice(0, PRODUCT_PAGE).join('')}</div>
+          <div id="productMoreWrap" class="${productCards.length > PRODUCT_PAGE ? '' : 'hidden'} mt-8 text-center"><button type="button" id="productMore" class="inline-flex items-center gap-2 bg-white border-2 border-emerald text-emerald-700 hover:bg-emerald hover:text-white font-semibold text-sm px-8 py-3 rounded-full shadow-sm transition">Selengkapnya <span class="font-normal opacity-80">(<span id="productMoreCount">${productCards.length - PRODUCT_PAGE}</span> lagi)</span> <i class="fa-solid fa-chevron-down text-xs"></i></button></div>
+        </div>`;
+
+      storeView.classList.add('hidden');
+      productView.classList.remove('hidden');
+      document.getElementById('backBtn').addEventListener('click', closeStore);
+      let shownProducts = PRODUCT_PAGE;
+      const moreBtn = document.getElementById('productMore');
+      if (moreBtn) moreBtn.addEventListener('click', () => {
+        shownProducts += PRODUCT_PAGE;
+        document.getElementById('productGrid').innerHTML = productCards.slice(0, shownProducts).join('');
+        const left = productCards.length - shownProducts;
+        if (left <= 0) document.getElementById('productMoreWrap').classList.add('hidden');
+        else document.getElementById('productMoreCount').textContent = left;
+      });
+      document.getElementById('katalog').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function closeStore() {
+      productView.classList.add('hidden');
+      productView.innerHTML = '';
+      storeView.classList.remove('hidden');
+      document.getElementById('katalog').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    storeGrid.addEventListener('click', e => {
+      const card = e.target.closest('[data-store]');
+      if (card) openStore(+card.dataset.store);
+    });
+    storeGrid.addEventListener('keydown', e => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const card = e.target.closest('[data-store]');
+      if (card) { e.preventDefault(); openStore(+card.dataset.store); }
+    });
+
+    const refilter = () => { storeLimit = STORE_PAGE; renderStores(); };
+    searchInput.addEventListener('input', refilter);
+    readyOnly.addEventListener('change', refilter);
+    kecSelect.addEventListener('change', refilter);
+    document.getElementById('storeMore').addEventListener('click', () => { storeLimit += STORE_PAGE; renderStores(); });
+    rasaBar.addEventListener('click', e => {
+      const chip = e.target.closest('.rasa-chip');
+      if (!chip) return;
+      activeRasa = chip.dataset.rasa;
+      rasaBar.querySelectorAll('.rasa-chip').forEach(c => {
+        const on = c === chip;
+        c.classList.toggle('bg-emerald', on); c.classList.toggle('text-white', on);
+        c.classList.toggle('bg-soft', !on);   c.classList.toggle('text-gray-600', !on);
+      });
+      refilter();
+    });
+    renderStores();
+
+    // ================== UMUM ==================
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('shadow-md', window.scrollY > 10);
+      navbar.classList.toggle('bg-white', window.scrollY > 10);
+    });
+
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const menuIcon = document.getElementById('menuIcon');
+    function setMenu(open) {
+      mobileMenu.classList.toggle('hidden', !open);
+      menuIcon.className = open ? 'fa-solid fa-xmark text-xl' : 'fa-solid fa-bars text-xl';
+    }
+    menuBtn.addEventListener('click', () => setMenu(mobileMenu.classList.contains('hidden')));
+    document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => setMenu(false)));
+
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('show'); revealObs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    function animateCounter(el) {
+      const target = +el.dataset.target, duration = 1800, start = performance.now();
+      (function tick(now) {
+        const p = Math.min((now - start) / duration, 1);
+        el.textContent = Math.floor(target * (1 - Math.pow(1 - p, 3))).toLocaleString('id-ID');
+        if (p < 1) requestAnimationFrame(tick);
+      })(start);
+    }
+    const counterObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { animateCounter(e.target); counterObs.unobserve(e.target); } });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('.counter').forEach(c => counterObs.observe(c));
+
+    // ================== TAB GABUNG MITRA ==================
+    const tabContent = {
+      merchant: {
+        title: 'Daftar Mitra Merchant UMKM',
+        desc: 'Tampilkan toko & produk Anda di katalog website dan jangkau lebih banyak pelanggan.',
+        list: ['Tampil di katalog OK BESS', 'Pengunjung siap beli', 'Tanpa biaya promosi mahal', 'Pengantaran kami urus', 'Kita tumbuh bersama'],
+        bg: ['from-gold', 'to-gold-600'], tick: 'text-white/90'
+      },
+      driver: {
+        title: 'Daftar Jadi Driver',
+        desc: 'Raih penghasilan fleksibel dengan jam kerja yang Anda atur sendiri.',
+        list: ['Bayaran langsung ke tangan', 'Order masuk lewat WhatsApp', 'Dikenal & dipercaya', 'Semakin rajin makin banyak'],
+        bg: ['from-emerald', 'to-emerald-700'], tick: 'text-gold'
+      }
+    };
+    const chipHtml = (name, v) => `<label class="cursor-pointer"><input type="checkbox" name="${name}" value="${v}" class="peer sr-only" /><span class="inline-block px-3 py-1.5 rounded-full text-xs font-semibold bg-soft text-gray-600 peer-checked:bg-gold peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-gold transition">${v}</span></label>`;
+    document.getElementById('mRasa').innerHTML = RASA.map(r => chipHtml('rasa', r)).join('');
+    document.getElementById('mLayanan').innerHTML = ['Siap diantar OK BESS', 'Bisa ambil di tempat', 'Terima pre-order'].map(v => chipHtml('layanan', v)).join('');
+
+    function buildMerchantMessage(form) {
+      const out = [];
+      form.querySelectorAll('[data-section]').forEach(sec => {
+        out.push('', `*${sec.dataset.section}*`);
+        sec.querySelectorAll('[data-field]').forEach(w => {
+          const label = w.querySelector(':scope > label, :scope > legend').textContent.replace(/\s*\*\s*$/, '').replace(/\s*\(.*\)\s*$/, '').trim();
+          const checks = [...w.querySelectorAll('input[type=checkbox]')];
+          let v;
+          if (checks.length) v = checks.filter(c => c.checked).map(c => c.value).join(', ');
+          else {
+            const el = w.querySelector('input, select, textarea');
+            v = el.value.trim();
+            if (v && el.type === 'time') v = v.replace(':', '.') + ' WIB';
+            if (v && el.hasAttribute('data-rupiah')) v = 'Rp' + Number(v).toLocaleString('id-ID');
+          }
+          out.push(`- ${label}: ${v || '-'}`);
+        });
+      });
+      return ['', ...out].join('\n');
+    }
+
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const formMsg = document.getElementById('formMsg');
+
+    function activateTab(key) {
+      tabBtns.forEach(b => {
+        const active = b.dataset.tab === key;
+        b.classList.toggle('bg-gold', active && key === 'merchant');
+        b.classList.toggle('bg-emerald', active && key === 'driver');
+        b.classList.toggle('text-white', active);
+        b.classList.toggle('shadow', active);
+        b.classList.toggle('text-gray-600', !active);
+      });
+      document.getElementById('form-merchant').classList.toggle('hidden', key !== 'merchant');
+      document.getElementById('form-driver').classList.toggle('hidden', key !== 'driver');
+      const d = tabContent[key];
+      document.getElementById('infoTitle').textContent = d.title;
+      document.getElementById('infoDesc').textContent = d.desc;
+      document.getElementById('infoList').innerHTML = d.list.map(t =>
+        `<li class="flex gap-3"><i class="fa-solid fa-circle-check ${d.tick} mt-0.5"></i> ${t}</li>`).join('');
+      document.getElementById('tabInfo').className = `md:col-span-2 bg-gradient-to-br ${d.bg.join(' ')} text-white p-8`;
+      formMsg.classList.add('hidden');
+    }
+    tabBtns.forEach(btn => btn.addEventListener('click', () => activateTab(btn.dataset.tab)));
+    document.querySelectorAll('[data-open-tab]').forEach(a => a.addEventListener('click', () => activateTab(a.dataset.openTab)));
+
+    document.querySelectorAll('.tab-panel').forEach(form => form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const jenis = form.id === 'form-driver' ? 'DRIVER' : 'MERCHANT UMKM';
+      const fields = form.querySelector('[data-section]')
+        ? buildMerchantMessage(form)
+        : '\n' + [...form.querySelectorAll('input, select')].map(el => {
+            const label = el.closest('div').querySelector('label').textContent;
+            return `- ${label}: ${el.value}`;
+          }).join('\n');
+      window.open(waLink(`Halo OK BESS, saya mau daftar jadi *${jenis}*:${fields}`), '_blank');
+      formMsg.textContent = 'Terima kasih! Data Anda kami teruskan ke WhatsApp admin OK BESS.';
+      formMsg.classList.remove('hidden');
+      form.reset();
+    }));
+  </script>
+</body>
+</html>
